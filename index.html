@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+
+    <style>
+        .grid_view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            row-gap: 1rem;
+            column-gap: 1rem;
+        }
+
+        .grid_item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100">
+    <h1 class="text-2xl font-bold mt-3 ms-3">Companies Data</h1>
+
+    <h2 id="result" class="text-2xl mt-2 ms-2 font-bold text-red-600">results: 0</h2>
+
+    <input id="inpSearch" class="p-2 ms-10 mt-10 block" type="text" placeholder="Search..." />
+    <button onclick="changeFilter()"
+        class="ms-10 mt-5 text-white p-2 text-xl bg-red-600 hover:bg-red-700 active:bg-red-800">
+        Search
+    </button>
+
+    <div class="grid_view mt-10 mx-24" id="gridView">
+          
+
+          
+
+        <!-- <div class="card bg-white shadow p-3 rounded-lg">
+        <div class="grid_item">
+          <span class="text-xl">FIELD1: </span>
+          <span class="text-xl text-red-600">0</span>
+        </div>
+        <div class="grid_item">
+          <span class="text-xl">name: </span>
+          <span class="text-xl text-red-600">TCS</span>
+        </div>
+        <div class="grid_item">
+          <span class="text-xl">ratings: </span>
+          <span class="text-xl text-red-600">3.8</span>
+        </div>
+        <div class="grid_item">
+          <span class="text-xl">review_count: </span>
+          <span class="text-xl text-red-600">(59.9k Reviews)</span>
+        </div> -->
+        <!-- <div class="grid_item">
+          <span class="text-xl">ctype: </span>
+          <span class="text-xl text-red-600">Public</span>
+        </div>
+        <div class="grid_item">
+          <span class="text-xl">years: </span>
+          <span class="text-xl text-red-600">55 years old</span>
+        </div>
+        <div class="grid_item">
+          <span class="text-xl">hq: </span>
+          <span class="text-xl text-red-600"
+            >Mumbai,Maharashtra + 276 more</span
+          >
+        </div>
+        <div class="grid_item">
+          <span class="text-xl">employees: </span>
+          <span class="text-xl text-red-600">1 Lakh+ Employees (India)</span>
+        </div> -->
+    </div>
+    </div>
+
+    <script src="companies.js"></script>
+
+    <script>
+        const gridView = document.getElementById("gridView");
+        function addItem(elm) {
+            const item = `<div class="card bg-white shadow p-3 rounded-lg">
+            <div class="grid_item">
+              <span class="text-xl">FIELD1: </span>
+              <span class="text-xl text-blue-900 font-bold">${elm.FIELD1}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">name: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.name}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">ratings: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.ratings}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">review_count: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.review_count}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">ctype: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.ctype}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">years: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.years}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">hq: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.hq}</span>
+            </div>
+            <div class="grid_item">
+              <span class="text-xl">employees: </span>
+              <span class="text-xl font-semibold text-blue-700">${elm.employees}</span>
+            </div>
+          </div>`;
+
+            const i = document.createElement("div");
+            i.innerHTML = item;
+            gridView.appendChild(i);
+        }
+
+        const inpSearch = document.getElementById("inpSearch");
+        function changeFilter() {
+            while (gridView.firstChild) {
+                gridView.removeChild(gridView.firstChild)
+            }
+            let result = document.getElementById('result');
+            let comCount = 0;
+            const search = inpSearch.value.toLowerCase();
+            for (elm of companies) {
+
+                const FIELD1 = elm.FIELD1.toString().toLowerCase();
+                const name = elm.name.toLowerCase();
+                const ratings = elm.ratings.toString().toLowerCase();
+                const review_count = elm.review_count.toLowerCase();
+                const ctype = elm.ctype.toLowerCase();
+                const years = elm.years.toLowerCase();
+                const hq = elm.hq.toLowerCase();
+                const employee = elm.employees.toLowerCase();
+
+
+                if (
+                    FIELD1.includes(search) ||
+                    name.includes(search) ||
+                    ratings.includes(search) ||
+                    review_count.includes(search) ||
+                    ctype.includes(search) ||
+                    years.includes(search) ||
+                    hq.includes(search) ||
+                    employee.includes(search)
+                ) {
+                    addItem(elm);
+                    comCount = comCount + 1;
+                    result.innerHTML = "results: " + comCount;
+                }
+
+            }
+        }
+    </script>
+</body>
+
+</html>
